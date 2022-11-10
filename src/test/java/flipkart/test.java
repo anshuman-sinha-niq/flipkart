@@ -1,12 +1,12 @@
 package flipkart;
 
+import org.testng.Assert;
+import java.util.ArrayList;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.testng.annotations.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.*;
 
 public class test {
 	
@@ -19,6 +19,9 @@ public class test {
 	driver.get("https://www.flipkart.com/");
 	driver.manage().window().maximize();
 	
+	//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);//deprecated error
+	
+	//verifying whether flipkart site has opened or not
 	Thread.sleep(2000);
 	String ex="Online Shopping Site for Mobiles, Electronics, Furniture, Grocery, Lifestyle, Books & More. Best Offers!";
 	String ac=driver.getTitle();
@@ -29,8 +32,6 @@ public class test {
 	WebElement pwd=driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div/div[2]/div/form/div[2]/input"));
 	pwd.sendKeys("qwertyuiop@123");
 	driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div/div[2]/div/form/div[4]/button")).click();
-	
-	//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);//deprecated error
 	
 	Thread.sleep(1000);
 	WebElement search=driver.findElement(By.className("_3704LK"));
@@ -46,8 +47,16 @@ public class test {
 	phonetext.click();
 	
 	Thread.sleep(4000);
-	WebElement cart = driver.findElement(By.xpath("//*[@id=\"container\"]/div/div[3]/div[1]/div[1]/div[2]/div/ul/li[1]/button"));
-    ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", cart);
+	ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+	String ex2 ="APPLE iPhone 11 ( 64 GB Storage, 0 GB RAM ) Online at Best Price On Flipkart.com";
+	driver.switchTo().window(tabs.get(1));
+	Assert.assertEquals(driver.getTitle(), ex2,"Title mismatched"); 
+	
+	WebElement cart = driver.findElement(By.xpath("//button[@class='_2KpZ6l _2U9uOA _3v1-ww']"));
 	cart.click();
+	Thread.sleep(3000);
+	
+	String ex3 ="Shopping Cart | Flipkart.com";
+    Assert.assertEquals(driver.getTitle(), ex3,"Title mismatched 3");
 	}
 }
