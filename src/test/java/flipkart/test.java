@@ -57,6 +57,6 @@ public class test {
 	Thread.sleep(3000);
 	
 	String ex3 ="Shopping Cart | Flipkart.com";
-    Assert.assertEquals(driver.getTitle(), ex3,"Title mismatched 3");
+    Assert.assertEquals(driver.getTitle(), ex3,"Title mismatched");
 	}
 }
